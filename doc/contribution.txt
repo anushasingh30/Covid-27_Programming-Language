@@ -1,0 +1,25 @@
+Milestone 1
+
+All the team members contributed to the discussion on the grammar for the language.
+ 
+Piyush    - Defined the grammar.
+          - Created the Github repo.
+          - Researched on technologies to be used to implement the project well.
+Anusha    - Defined the grammar.
+          - Contributed in the design documentation for Milestone 1.
+          - Worked on the project structure.
+Kushagr   - Defined the grammar.
+          - Contributed in the design documentation for Milestone 1.
+          - Researched on technologies to be used to implement the project well.
+
+
+Contribution plan for final milstone:
+
+All the members will contribute to the code. However, rough division of work is as follows:
+
+Piyush    - Lexical Analyser
+          - Video Presentation
+Anusha    - Interpretor
+          - Video Presentation
+Kushagr   - Parser
+          - Video Presentation

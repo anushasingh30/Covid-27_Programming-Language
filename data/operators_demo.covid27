@@ -1,0 +1,24 @@
+#begin
+real sum=0;
+real mul=0;
+real div=0;
+real firstNumber =10;
+real secondNumber =7;
+List l = {10,20,30, 40};
+List m = {5,15,25};
+
+sum = 10 + 7;
+print("Sum is ");
+print(sum);
+
+mul = 10 * 7;
+print("\nMul is ");
+print(mul);
+
+div = 10 / 7;
+print("\nDiv is ");
+print(div);
+l+m;
+print("\nAddition of two lists l+m is ");
+print(l);
+#end

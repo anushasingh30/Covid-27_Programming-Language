@@ -1,0 +1,22 @@
+#begin
+real numb = false;
+real a = 1;
+real b = 2;
+
+%% did not declare the value c
+
+c = a+b;
+print("a + b is - ");
+print(c);
+
+if(numb > 0){
+	print(" greater than zero");
+}else{
+	if(numb == 0){
+		print("equal zero");
+	}else{
+		print("less than zero");
+	};
+};
+
+#end

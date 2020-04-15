@@ -1,0 +1,9 @@
+#begin
+List l = {1,2,3};
+List s = {1,2,3};
+
+l + s;
+
+print(l);
+
+#end

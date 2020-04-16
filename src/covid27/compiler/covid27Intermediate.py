@@ -119,3 +119,25 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
         else:
             print('Error: Compile time Error..! Variable:', variable_name, 'must be of type real!')
             sys.exit()
+
+    # Exit a parse tree produced by covid27Parser#stdIfStatement.
+    def exitStdIfStatement(self, ctx):
+        self.__add(Constants.EXITIF, '')
+
+    # Exit a parse tree produced by covid27Parser#condition.
+    def exitCondition(self, ctx):
+        if 'else' in ctx.parentCtx.getText():
+            self.__add(Constants.JIF, Constants.BEGINELSE)
+        else:
+            self.__add(Constants.JIF, Constants.EXITIF)
+
+    def enterElseStatement(self, ctx):
+        self.__add(Constants.BEGINELSE, '')
+
+    # Exit a parse tree produced by covid27Parser#elseStatement.
+    def exitElseStatement(self, ctx):
+        self.__add(Constants.ENDELSE, '')
+
+    # Enter a parse tree produced by covid27Parser#curlyBraceClose.
+    def enterCurlyBraceClose(self, ctx):
+        self.__add(Constants.JMP, Constants.ENDELSE)

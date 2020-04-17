@@ -141,3 +141,78 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
     # Enter a parse tree produced by covid27Parser#curlyBraceClose.
     def enterCurlyBraceClose(self, ctx):
         self.__add(Constants.JMP, Constants.ENDELSE)
+
+    # Enter a parse tree produced by covid27Parser#whileLoop.
+    def enterWhileLoop(self, ctx):
+        self.while_block_cnt += 1
+        self.__add(Constants.BEGINWHILE, str(self.while_block_cnt))
+
+    # Exit a parse tree produced by covid27Parser#whileLoop.
+    def exitWhileLoop(self, ctx):
+        self.__add(Constants.JMP + ' ' + Constants.BEGINWHILE, str(self.while_block_cnt))
+        self.__add(Constants.EXITWHILE, str(self.while_block_cnt))
+        self.while_block_cnt -= 1
+
+    # Exit a parse tree produced by covid27Parser#whileLoop.
+    def exitWhile_condition(self, ctx):
+        self.__add(Constants.JIF + ' ' + Constants.EXITWHILE, str(self.while_block_cnt))
+
+
+    # Enter a parse tree produced by covid27Parser#relBoolStatement.
+    def enterRelBoolStatement(self, ctx):
+        #if ctx.identifier() is not None:
+        #    self.__add(Constants.LOAD, ctx.identifier())
+        pass
+
+    # Enter a parse tree produced by covid27Parser#booleanVal.
+    def enterBooleanVal(self, ctx):
+        self.__add(Constants.PUSH, ctx.getText())
+
+    # Exit a parse tree produced by covid27Parser#greaterRelExpression.
+    def exitGreaterRelExpression(self, ctx):
+        self.__add(Constants.GT, '')
+
+    # Exit a parse tree produced by covid27Parser#greaterEqualRelExpression.
+    def exitGreaterEqualRelExpression(self, ctx):
+        self.__add(Constants.GTE, '')
+
+    # Exit a parse tree produced by covid27Parser#lessEqualRelExpression.
+    def exitLessEqualRelExpression(self, ctx):
+        self.__add(Constants.LTE, '')
+
+    # Exit a parse tree produced by covid27Parser#lessRelExpression.
+    def exitLessRelExpression(self, ctx):
+        self.__add(Constants.LT, '')
+
+    def exitNotEqualsRelExpression(self, ctx):
+        self.__add(Constants.NEQ, '')
+
+    # Enter a parse tree produced by covid27Parser#idEqualsBoolExpression.
+    def enterIdEqualsBoolExpression(self, ctx):
+        self.__add(Constants.PUSH, ctx.boolValue.text)
+
+
+    # Exit a parse tree produced by covid27Parser#idEqualsBoolExpression.
+    def exitIdEqualsBoolExpression(self, ctx):
+        variable_name = ctx.idName.getText()
+        if variable_name in self.bool_list:
+            self.__add(Constants.LOAD, variable_name)
+            self.__add(Constants.EQB, '')
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
+            sys.exit()
+
+    # Enter a parse tree produced by covid27Parser#idNotEqualsBoolExpression.
+    def enterIdNotEqualsBoolExpression(self, ctx):
+        self.__add(Constants.PUSH, ctx.boolValue.getText())
+
+
+    # Exit a parse tree produced by covid27Parser#idNotEqualsBoolExpression.
+    def exitIdNotEqualsBoolExpression(self, ctx):
+        variable_name = ctx.idName.getText()
+        if id in bool_list:
+            self.__add(Constants.LOAD, variable_name)
+            self.__add(Constants.NEQB, '')
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
+            sys.exit()

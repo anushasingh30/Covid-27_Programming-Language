@@ -216,3 +216,34 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
         else:
             print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
             sys.exit()
+    # Exit a parse tree produced by covid27Parser#additionExpression.
+    def exitAdditionExpression(self, ctx):
+        self.__add(Constants.ADD,'')
+
+    # Exit a parse tree produced by covid27Parser#subtractionExpression.
+    def exitSubtractionExpression(self, ctx):
+        self.__add(Constants.SUB,'')
+
+    # Enter a parse tree produced by covid27Parser#mullExpression.
+    def exitMullExpression(self, ctx):
+        self.__add(Constants.MUL,'')
+
+    # Exit a parse tree produced by covid27Parser#divisionExpression.
+    def exitDivisionExpression(self, ctx):
+        self.__add(Constants.DIV,'')
+
+    # Exit a parse tree produced by covid27Parser#modExpression.
+    def exitModExpression(self, ctx):
+        self.__add(Constants.MOD,'')
+    # Exit a parse tree produced by covid27Parser#printString.
+    def exitPrintString(self, ctx):
+        self.__add(Constants.DISPLAY, ctx.STR_END().getText())
+    
+    # Exit a parse tree produced by covid27Parser#printIdentifier.
+    def exitPrintIdentifier(self, ctx):
+        variable_name = ctx.identifiername.getText()
+        if variable_name in self.real_list + self.bool_list + self.str_list + self.list_list:
+            self.__add(Constants.DISPLAY, variable_name)
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
+            sys.exit()

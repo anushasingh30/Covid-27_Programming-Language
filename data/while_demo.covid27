@@ -1,0 +1,16 @@
+#begin
+real fact=1;
+real n=4;
+real i = 1;
+
+while( i<=n ){
+		fact=fact*i;
+		i=i+1;
+};
+
+print("The factorial of ");
+print(n);
+print(" is ");
+print(fact);
+#end
+

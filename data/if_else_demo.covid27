@@ -1,0 +1,24 @@
+#begin
+string name = "ABC";
+real marks = 35;
+real totalmarks = 30;
+bool class_attended = true;
+
+if(marks < totalmarks or class_attended == false){
+	print(name);
+	print("did not do well and did not attend!");
+	print(marks);
+};
+
+if(marks >= totalmarks and class_attended == true){
+	if(marks == totalmarks ){
+		print(name);
+		print("Student scored full!");
+		print(marks);
+	}else {
+		print(name);
+		print("Student is exceptional!");
+		print(marks);
+	};
+};
+#end

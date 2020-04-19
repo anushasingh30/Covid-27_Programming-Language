@@ -247,3 +247,27 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
         else:
             print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
             sys.exit()
+            
+    # Exit a parse tree produced by covid27Parser#andLogicRelExpression.
+    def exitAndLogicRelExpression(self, ctx):
+        self.__add(Constants.AND,'')
+
+    # Exit a parse tree produced by covid27Parser#orLogicRelExpression.
+    def exitOrLogicRelExpression(self, ctx):
+        self.__add(Constants.OR,'')
+
+    # Exit a parse tree produced by covid27Parser#andRelLogicExpression.
+    def exitAndRelLogicExpression(self, ctx):
+        self.__add(Constants.AND,'')
+
+    # Exit a parse tree produced by covid27Parser#orRelLogicExpression.
+    def exitOrRelLogicExpression(self, ctx):
+        self.__add(Constants.OR,'')
+
+    # Exit a parse tree produced by covid27Parser#NotRelExpression.
+    def exitNotRelExpression(self, ctx):
+        self.__add(Constants.NOT,'')
+
+    # Exit a parse tree produced by covid27Parser#noLogicExpression.
+    def exitNoLogicExpression(self, ctx):
+        self.__add(Constants.NOT,'')

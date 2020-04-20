@@ -6,9 +6,6 @@ from covid27.common.constants import Constants
 class InterimCodeGenerator(covid27Listener.covid27Listener):
 
     def __init__(self, filename):
-        if InterimCodeGenerator.__instance != None:
-            raise Exception('Cannot re-instantiate a singleton class.')
-        InterimCodeGenerator.__instance = self
         self.if_block_cnt = 0
         self.while_block_cnt = 0
 

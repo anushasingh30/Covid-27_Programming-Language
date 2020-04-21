@@ -317,3 +317,41 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
         else:
             print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
             sys.exit()
+
+    # Enter a parse tree produced by covid27Parser#numExpression.
+    def enterNumExpression(self, ctx):
+        self.__add(Constants.PUSH,ctx.getText())
+
+    # Exit a parse tree produced by covid27Parser#multipleElementList.
+    # def exitMultipleElementList(self, ctx):
+    #     self.__add(Constants.MUL,'')
+
+
+    # Enter a parse tree produced by covid27Parser#idAddListExpression.
+    def enterIdAddListExpression(self, ctx):
+        variable_name = ctx.varname.getText()
+        if variable_name in self.__get_all_var_names():
+            self.__add(Constants.LOAD,variable_name)
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is not defined!')
+            sys.exit()
+
+    # Exit a parse tree produced by covid27Parser#idAddListExpression.
+    def exitIdAddListExpression(self, ctx):
+        if '+' in ctx.getText():
+            self.__add(Constants.ADDLIST,'')
+        elif '-' in ctx.getText():
+            self.__add(Constants.SUBLIST,'')
+        else:
+            print('Error: Compile time Error..! Cannot just write just a single list')
+            sys.exit()
+
+    # Enter a parse tree produced by covid27Parser#listIdExpression.
+    def enterListIdExpression(self, ctx):
+        variable_name = ctx.varname.getText()
+        self.__add(Constants.LOAD,variable_name)
+
+
+    # Exit a parse tree produced by covid27Parser#EqualRelExpression.
+    def exitEqualRelExpression(self, ctx):
+        self.__add(Constants.EQ, '')

@@ -77,10 +77,50 @@ class Runtime:
                         self.string_stack.append(self.string_map[s])
                     elif s in self.double_list_map:
                         self.double_list_stack.append(self.double_list_map[s])
-
+                elif cmd == Constants.EQB:
+                    first_val = self.bool_stack.pop()
+                    second_val = self.bool_stack.pop()
+                    self.bool_stack.append(first_val == second_val)
+                elif cmd == Constants.NEQ:
+                    first_val = self.double_stack.pop()
+                    second_val = self.double_stack.pop()
+                    self.bool_stack.append(first_val != second_val)
+                elif cmd == Constants.EQ:
+                    first_val = self.double_stack.pop()
+                    second_val = self.double_stack.pop()
+                    self.bool_stack.append(first_val == second_val)
+                elif cmd == Constants.NEQB:
+                    second_val = self.bool_stack.pop()
+                    first_val = self.bool_stack.pop()
+                    self.bool_stack.append(first_val != second_val)
+                elif cmd == Constants.LT:
+                    second_val = self.double_stack.pop()
+                    first_val = self.double_stack.pop()
+                    self.bool_stack.append(first_val < second_val)
+                elif cmd == Constants.LTE:
+                    second_val = self.double_stack.pop()
+                    first_val = self.double_stack.pop()
+                    self.bool_stack.append(first_val <= second_val)
+                elif cmd == Constants.GT:
+                    second_val = self.double_stack.pop()
+                    first_val = self.double_stack.pop()
+                    self.bool_stack.append(first_val > second_val)
+                elif cmd == Constants.GTE:
+                    second_val = self.double_stack.pop()
+                    first_val = self.double_stack.pop()
+                    self.bool_stack.append(first_val >= second_val)
+                elif cmd == Constants.AND:
+                    second_val = self.bool_stack.pop()
+                    first_val = self.bool_stack.pop()
+                    self.bool_stack.append(first_val and second_val)
+                elif cmd == Constants.OR:
+                    second_val = self.bool_stack.pop()
+                    first_val = self.bool_stack.pop()
+                    self.bool_stack.append(first_val or second_val)
                 # TODO: Complete the command structure!
                 if take_line_flag:
                     line = self.get_next_instruction('')
         except Exception as e:
             print('Runtime Error:', e)
             traceback.print_exc()
+                

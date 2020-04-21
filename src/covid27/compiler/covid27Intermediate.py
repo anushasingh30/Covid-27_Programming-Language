@@ -6,9 +6,6 @@ from covid27.common.constants import Constants
 class InterimCodeGenerator(covid27Listener.covid27Listener):
 
     def __init__(self, filename):
-        if InterimCodeGenerator.__instance != None:
-            raise Exception('Cannot re-instantiate a singleton class.')
-        InterimCodeGenerator.__instance = self
         self.if_block_cnt = 0
         self.while_block_cnt = 0
 
@@ -271,3 +268,90 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
     # Exit a parse tree produced by covid27Parser#noLogicExpression.
     def exitNoLogicExpression(self, ctx):
         self.__add(Constants.NOT,'')
+
+    # Exit a parse tree produced by covid27Parser#identifierExpression.
+    def exitIdentifierExpression(self, ctx):
+        variable_name = ctx.getText()
+        if variable_name in self.__get_all_var_names():
+            self.__add(Constants.LOAD,variable_name)
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
+            sys.exit()
+
+    # Exit a parse tree produced by covid27Parser#identifierElement.
+    def exitIdentifierElement(self, ctx):
+        variable_name = ctx.varname.getText()
+        element = ctx.elemName.getText()
+        if variable_name in self.real_list:
+            try:
+                float(variable_name)
+            except:
+                print('Assignment Error: You know the variable:', variable_name, 'is not assigned a number!')
+                sys.exit()
+            self.__add(Constants.ASSIGNDOUBLE, variable_name + ' ' + element)
+        elif variable_name in self.bool_list:
+            if element not in ['true', 'false']:
+                print('Assignment Error: You know the variable:', variable_name, 'is not assigned a bool!')
+                sys.exit()
+            self.__add(Constants.ASSIGNBOOL, variable_name + ' ' + element)
+        elif variable_name in self.str_list:
+            if element[0] != '"' and element[-1] != '"':
+                print('Assignment Error: You know the variable:', variable_name, 'is not assigned a string!')
+                sys.exit()
+            self.__add(Constants.ASSIGNSTRING, variable_name + ' ' + element)
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
+            sys.exit()
+        self.__add(Constants.STORE, variable_name)
+
+    def enterIdentifierExpr(self, ctx):
+        variable_name = ctx.varname.getText()
+        if not variable_name in self.__get_all_var_names():
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
+            sys.exit()
+
+    def exitIdentifierExpr(self, ctx):
+        variable_name = ctx.varname.getText()
+        if variable_name in self.__get_all_var_names():
+            self.__add(Constants.STORE, variable_name)
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is missing!')
+            sys.exit()
+
+    # Enter a parse tree produced by covid27Parser#numExpression.
+    def enterNumExpression(self, ctx):
+        self.__add(Constants.PUSH,ctx.getText())
+
+    # Exit a parse tree produced by covid27Parser#multipleElementList.
+    # def exitMultipleElementList(self, ctx):
+    #     self.__add(Constants.MUL,'')
+
+
+    # Enter a parse tree produced by covid27Parser#idAddListExpression.
+    def enterIdAddListExpression(self, ctx):
+        variable_name = ctx.varname.getText()
+        if variable_name in self.__get_all_var_names():
+            self.__add(Constants.LOAD,variable_name)
+        else:
+            print('Error: Compile time Error..! You know the variable:', variable_name, 'is not defined!')
+            sys.exit()
+
+    # Exit a parse tree produced by covid27Parser#idAddListExpression.
+    def exitIdAddListExpression(self, ctx):
+        if '+' in ctx.getText():
+            self.__add(Constants.ADDLIST,'')
+        elif '-' in ctx.getText():
+            self.__add(Constants.SUBLIST,'')
+        else:
+            print('Error: Compile time Error..! Cannot just write just a single list')
+            sys.exit()
+
+    # Enter a parse tree produced by covid27Parser#listIdExpression.
+    def enterListIdExpression(self, ctx):
+        variable_name = ctx.varname.getText()
+        self.__add(Constants.LOAD,variable_name)
+
+
+    # Exit a parse tree produced by covid27Parser#EqualRelExpression.
+    def exitEqualRelExpression(self, ctx):
+        self.__add(Constants.EQ, '')

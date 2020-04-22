@@ -181,6 +181,26 @@ class Runtime:
                     self.double_list_stack.append(res)
                     self.list_name_stack.pop()
                     self.double_list_map[self.list_name_stack[-1]] = res
+                elif cmd == Constants.DISPLAY:
+                    display_content = line.split()[1]
+                    if display_content in self.double_map or self.checkFloat(display_content):
+                        print(self.double_map[display_content], end='')
+                    elif display_content in self.bool_map:
+                        print(self.bool_map[display_content], end='')
+                    elif display_content in self.double_list_map:
+                        print(self.double_list_map[display_content], end='')
+                    elif display_content in self.string_map:
+                        print(self.string_map[display_content], end='')
+                    else:
+                        s = ' '.join(line.split()[1:])
+                        s = '\n'.join(s.split('\\n'))
+                        print(str(s[1:-1]), end='')
+                elif cmd == Constants.ADD:
+                    self.double_stack.append(self.double_stack.pop() + self.double_stack.pop())
+                elif cmd == Constants.SUB:
+                    self.double_stack.append(self.double_stack.pop() - self.double_stack.pop())
+                elif cmd == Constants.MUL:
+                    self.double_stack.append(self.double_stack.pop() * self.double_stack.pop())
                 # TODO: Complete the command structure!
                 if take_line_flag:
                     line = self.get_next_instruction('')

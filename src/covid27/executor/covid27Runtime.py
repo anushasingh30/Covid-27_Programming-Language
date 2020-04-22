@@ -117,6 +117,70 @@ class Runtime:
                     second_val = self.bool_stack.pop()
                     first_val = self.bool_stack.pop()
                     self.bool_stack.append(first_val or second_val)
+                elif cmd == Constants.NOT:
+                    self.bool_stack.append(not self.bool_stack.pop())
+                elif cmd == Constants.DECDOUBLE:
+                    var_name = line.split()[1]
+                    self.double_map[var_name] = 0.0
+                elif cmd == Constants.DECBOOL:
+                    self.bool_map[line.split()[1]] = False
+                elif cmd == Constants.DECSTRING:
+                    self.bool_map[line.split()[1]] = ""
+                elif cmd == Constants.ASSIGNDOUBLE:
+                    var_name1, val = line.split()[1:]
+                    self.double_map[var_name1] = float(val)
+                    self.double_stack.append(float(val))
+                elif cmd == Constants.ASSIGNBOOL:
+                    var_name1, val = line.split()[1:]
+                    self.bool_map[var_name1] = val == 'true'
+                    self.bool_stack.append(val == 'true')
+                elif cmd == Constants.ASSIGNSTRING:
+                    var_name1, val = line.split()[1:]
+                    self.string_map[var_name1] = val
+                    self.string_stack.append(val)
+                elif cmd == Constants.DECLIST:
+                    var_name1 = line.split()[1]
+                    self.double_list_map[var_name1] = double_list
+                    self.list_name_stack.append(var_name1)
+                    self.double_list_stack.append(double_list)
+                elif cmd == Constants.PUSHLIST:
+                    val = line.split()[1]
+                    list_val = float(val)
+                    var_name = self.list_name_stack.pop()
+                    cur_list = list(self.double_list_stack.pop())
+                    self.list_name_stack.append(var_name)
+                    cur_list.append(list_val)
+                    self.double_list_map[var_name] = cur_list
+                    self.double_list_stack.append(cur_list)
+                elif cmd == Constants.ADDLIST:
+                    second = list(self.double_list_stack.pop())
+                    first = list(self.double_list_stack.pop())
+                    min_size = min(len(first), len(second))
+                    res = [first[i]+second[i] for i in range(min_size)]
+                    if min_size != len(first):
+                        res = res + first[min_size:]
+                    if min_size != len(second):
+                        res = res + second[min_size:]
+                    self.double_list_stack.append(res)
+                    self.double_list_map[self.list_name_stack[-2]] = res
+                elif cmd == Constants.PUSH:
+                    s = line.split()[1]
+                    if self.checkFloat(s):
+                        self.double_stack.append(float(s))
+                    else:
+                        self.bool_stack.append("true" == s)
+                elif cmd == Constants.SUBLIST:
+                    second = list(self.double_list_stack.pop())
+                    first = list(self.double_list_stack.pop())
+                    min_size = min(len(first), len(second))
+                    res = [first[i]-second[i] for i in range(min_size)]
+                    if min_size != len(first):
+                        res = res + first[min_size:]
+                    if min_size != len(second):
+                        res = res + second[min_size:]
+                    self.double_list_stack.append(res)
+                    self.list_name_stack.pop()
+                    self.double_list_map[self.list_name_stack[-1]] = res
                 # TODO: Complete the command structure!
                 if take_line_flag:
                     line = self.get_next_instruction('')

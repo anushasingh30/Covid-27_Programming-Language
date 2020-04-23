@@ -201,6 +201,50 @@ class Runtime:
                     self.double_stack.append(self.double_stack.pop() - self.double_stack.pop())
                 elif cmd == Constants.MUL:
                     self.double_stack.append(self.double_stack.pop() * self.double_stack.pop())
+                elif cmd == Constants.DIV:
+                    x = self.double_stack.pop()
+                    y = self.double_stack.pop()
+                    if (x != 0.0):
+                        self.double_stack.append(y / x)
+                    else:
+                        print("ERROR:Cannot Divide by zero")
+                elif cmd == Constants.MOD:
+                    secondValue = self.double_stack.pop()
+                    firstValue = self.double_stack.pop()
+                    self.double_stack.append(firstValue % secondValue)
+
+                elif cmd == Constants.JIF:
+                    if not self.bool_stack.pop():
+                        label = line.split()[1]
+                        line = self.get_next_instruction(label)
+                        if label == Constants.ENDWHILE:
+                            line = self.get_next_instruction(label + line.split()[2])
+                        take_line_flag = False
+                        
+                elif cmd == Constants.JMP:
+                    variable = line.split()[1]
+                    if Constants.WHILE in line:
+                        self.f.close()
+                        self.f = open(self.interim_code_path)
+                        self.interim_code = iter(self.f)
+                        line = self.get_next_instruction(Constants.BEGINWHILE + ' ' + line.split()[2])
+                        take_line_flag = False
+                    elif Constants.ELSE in line:
+                        label = line.split()[1]
+                        line = self.get_next_instruction(label)
+                        take_line_flag = False
+                elif cmd == Constants.HALT:
+                    sys.exit()
+                elif cmd == Constants.EXITWHILE:
+                    take_line_flag = True
+                elif cmd == Constants.EXITIF:
+                    take_line_flag = True
+                elif cmd == Constants.ENDELSE:
+                    take_line_flag = True
+                elif cmd == Constants.BEGINELSE:
+                    take_line_flag = True
+                elif cmd == Constants.BEGINWHILE:
+                    take_line_flag = True
                 # TODO: Complete the command structure!
                 if take_line_flag:
                     line = self.get_next_instruction('')

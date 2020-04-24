@@ -245,7 +245,6 @@ class Runtime:
                     take_line_flag = True
                 elif cmd == Constants.BEGINWHILE:
                     take_line_flag = True
-                # TODO: Complete the command structure!
                 if take_line_flag:
                     line = self.get_next_instruction('')
         except Exception as e:

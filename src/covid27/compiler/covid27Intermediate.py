@@ -26,8 +26,6 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
 
     # Exit a parse tree produced by covid27Parser#program.
     def exitProgram(self, ctx):
-        from pprint import pprint
-        pprint(self.interim_code)
         with open(self.filename, 'w+') as f:
             f.write(''.join(self.interim_code))
 

@@ -1,3 +1,4 @@
+
 Milestone 1
 
 All the team members contributed to the discussion on the grammar for the language.
@@ -13,13 +14,13 @@ Kushagr   - Defined the grammar.
           - Researched on technologies to be used to implement the project well.
 
 
-Contribution plan for final milstone:
+Final Milestone 
 
-All the members will contribute to the code. However, rough division of work is as follows:
+The Contribution of the code is as follows:
 
-Piyush    - Lexical Analyser
-          - Video Presentation
-Anusha    - Interpretor
-          - Video Presentation
-Kushagr   - Parser
-          - Video Presentation
+Piyush    - Designed the intermediate code structure
+	  - Equivalent Code contribution
+Anusha    - Generated Parser using antlr
+	  - Equivalent Code contribution
+Kushagr   - Found and understand antlr library
+	  - Equivalent Code contribution

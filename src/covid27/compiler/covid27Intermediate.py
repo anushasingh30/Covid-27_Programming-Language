@@ -67,7 +67,7 @@ class InterimCodeGenerator(covid27Listener.covid27Listener):
             sys.exit()
 
     # Exit a parse tree produced by covid27Parser#idDeclarationAssign.
-    def exitIdDeclarationAssign(self, ctx):
+    def enterIdDeclarationAssign(self, ctx):
         variable_name = ctx.varname.getText()
         typename = ctx.typename.getText()
         element_name = ctx.elemName.getText()

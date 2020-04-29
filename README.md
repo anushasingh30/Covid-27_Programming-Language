@@ -32,3 +32,9 @@ To run the compiled file
 And you are done.
 
 To see the options for main.py run: `python main.py -h`
+
+# Demo Videos
+* Part 1: [Theory and presentation](https://youtu.be/YmK4orYHVgw)
+* Part 2: [Code go through](https://youtu.be/Qt0TUfm-s30)
+* Part 3: [Demo](https://youtu.be/-OLRKiujK-0)
+

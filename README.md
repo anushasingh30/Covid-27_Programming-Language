@@ -6,7 +6,7 @@ To run the language you need to install Python3.
 
 After installation of Python3 make sure you have pip3 setup for you.
 
-Run command `pip install antlr4`
+Run command `pip install antlr4-python3-runtime`
 
 ## Sample Program
 Following is a sample program in the language

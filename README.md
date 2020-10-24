@@ -1,3 +1,6 @@
+# Note for Viewers
+Username `anushasingh30` and `asign270` belongs to the same user!
+
 # Covid27 - A Language made in Pandemic
 The compiler language made for the course SER 502 Spring 2020 @ ASU.
 
